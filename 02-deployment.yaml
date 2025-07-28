@@ -19,23 +19,23 @@ spec:
         name: tools
     spec:
       containers:
-      - env:
-        - name: POD_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.podIP
-        - name: OLLAMA_ENDPOINT
-          value: http://ollama.ollama.svc.cluster.local:11434/api
-        image: ghcr.io/kainlite/tools:eb690f1b4e031a1d5b48a8e09047d9013ae1e95b
-        imagePullPolicy: Always
-        name: tools
-        ports:
-        - containerPort: 3000
-        securityContext:
-          allowPrivilegeEscalation: false
+        - env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: OLLAMA_ENDPOINT
+              value: http://ollama.ollama.svc.cluster.local:11434/api
+          image: ghcr.io/kainlite/tools:ec9e3d61b5688f8e69a77d775d59250355dd08a6
+          imagePullPolicy: Always
+          name: tools
+          ports:
+            - containerPort: 3000
+          securityContext:
+            allowPrivilegeEscalation: false
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       securityContext:
         runAsGroup: 1000
         runAsUser: 1000

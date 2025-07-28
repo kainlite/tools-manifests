@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    app: tools
+    name: tools
+  name: tools
+  namespace: tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tools
+  template:
+    metadata:
+      labels:
+        app: tools
+        name: tools
+    spec:
+      containers:
+      - env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: OLLAMA_ENDPOINT
+          value: http://ollama.ollama.svc.cluster.local:11434/api
+        image: kainlite/tools:latest
+        imagePullPolicy: Always
+        name: tools
+        ports:
+        - containerPort: 3000
+        securityContext:
+          allowPrivilegeEscalation: false
+      imagePullSecrets:
+      - name: regcred
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000

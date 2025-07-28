@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tools
+  namespace: tools
+spec:
+  destination:
+    namespace: tools
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    kustomize:
+      images:
+      - ghcr.io/kainlite/tools:latest
+    path: manifests
+    repoURL: https://github.com/kainlite/tools
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

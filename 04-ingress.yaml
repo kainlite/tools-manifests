@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tools-ingress
+  namespace: tools
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # handy to disable for the acme initial validation
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+    use-proxy-protocol: "true"
+spec:
+  tls:
+  - hosts:
+      - private.segfault.pw
+    secretName: private-prod-tls
+  rules:
+  - host: private.segfault.pw
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: tools
+            port:
+              number: 3000

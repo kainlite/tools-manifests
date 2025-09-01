@@ -31,7 +31,7 @@ spec:
           imagePullPolicy: Always
           name: tools
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
           securityContext:
             allowPrivilegeEscalation: false
       imagePullSecrets:

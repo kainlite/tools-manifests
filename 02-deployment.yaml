@@ -30,7 +30,7 @@ spec:
           envFrom:
             - secretRef:
                 name: tools-config
-          image: ghcr.io/kainlite/tools:6402ea3a21912a26d189f168e7e6002558eaf7fa
+          image: ghcr.io/kainlite/tools:867eb007a304cde75feedae131302ec5f7e42f72
           imagePullPolicy: Always
           name: tools
           ports:
